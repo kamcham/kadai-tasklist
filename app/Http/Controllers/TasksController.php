@@ -36,9 +36,6 @@ class TasksController extends Controller
 
 
 
-
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -89,21 +86,20 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-    if (\Auth::check()) 
-    {   return redirect('/');
-    
-        if(\Auth::user()->id === $task->user_id){
+        if (\Auth::check()) 
+        {  $task = Task::find($id);
         
-        $task = Task::find($id);
-
-        return view('tasks.show', [
-            'task' => $task,
-
-        ]);
-    }
-        return redirect('/');
-    }
-        return redirect('/');
+            if(\Auth::user()->id === $task->user_id){
+    
+            return view('tasks.show', [
+                'task' => $task,
+    
+            ]);
+            }
+            return redirect('/');
+        }
+    
+    return redirect('/');
     }
 
     /**
